@@ -193,4 +193,26 @@ class EitherLineShiftView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : EitherLineShiftView) {
+
+        private val animator : Animator = Animator(view)
+        private val els : EitherLineShift = EitherLineShift(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            els.draw(canvas, paint)
+            animator.animate {
+                els.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            els.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
