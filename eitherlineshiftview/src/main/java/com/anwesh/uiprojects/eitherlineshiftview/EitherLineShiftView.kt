@@ -216,4 +216,13 @@ class EitherLineShiftView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : EitherLineShiftView {
+            val view : EitherLineShiftView = EitherLineShiftView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
