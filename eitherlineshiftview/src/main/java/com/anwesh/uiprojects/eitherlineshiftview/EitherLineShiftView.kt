@@ -20,6 +20,7 @@ val scGap : Float = 0.05f
 val scDiv : Double = 0.51
 val foreColor : Int = Color.parseColor("#1A237E")
 val backColor : Int = Color.parseColor("#BDBDBD")
+val delay : Long = 20
 
 fun Int.inverse() : Float = 1f / this
 fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
@@ -54,9 +55,13 @@ fun Canvas.drawELSNode(i : Int, scale : Float, paint : Paint) {
     val size : Float = gap / sizeFactor
     val sc1 : Float = scale.divideScale(0, 2)
     val sc2 : Float = scale.divideScale(1, 2)
+    paint.color = foreColor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
     save()
     translate(w / 2, gap * (i + 1))
     rotate(90f * sc2)
+    drawLine(-size, 0f, size, 0f, paint)
     drawEitherLinesShift(sc1, size, paint)
     restore()
 }
@@ -105,7 +110,7 @@ class EitherLineShiftView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(delay)
                     view.invalidate()
                 } catch(ex : Exception) {
 
