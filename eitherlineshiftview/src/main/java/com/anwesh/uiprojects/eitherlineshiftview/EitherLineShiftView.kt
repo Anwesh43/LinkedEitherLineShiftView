@@ -222,7 +222,7 @@ class EitherLineShiftView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : EitherLineShiftView {
             val view : EitherLineShiftView = EitherLineShiftView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
