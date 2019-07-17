@@ -33,6 +33,34 @@ fun Float.updateValue(dir : Float, a : Int, b : Int) : Float {
     return mirrorValue(a, b) * dir * scGap
 }
 
+fun Canvas.drawEitherLineShift(i : Int, scale : Float, size : Float, paint : Paint) {
+    val gap : Float = (2 * size) / (lines - 1)
+    save()
+    translate(-size + i * gap, (size / 2) * scale.divideScale(i, lines))
+    drawLine(0f, -size, 0f, 0f, paint)
+    restore()
+}
+
+fun Canvas.drawEitherLinesShift(scale : Float, size : Float, paint : Paint) {
+    for (j in 0..(lines - 1)) {
+        drawEitherLineShift(j, scale, size, paint)
+    }
+}
+
+fun Canvas.drawELSNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / (nodes + 1)
+    val size : Float = gap / sizeFactor
+    val sc1 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
+    save()
+    translate(w / 2, gap * (i + 1))
+    rotate(90f * sc2)
+    drawEitherLinesShift(sc1, size, paint)
+    restore()
+}
+
 class EitherLineShiftView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
